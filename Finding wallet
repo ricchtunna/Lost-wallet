@@ -1,0 +1,39 @@
+# Import libraries and dependencies
+import geopy.distance
+import requests
+
+# Define wallet location
+wallet_location = (37.7749, -122.4194)  # San Francisco, CA
+
+# Define search radius
+search_radius = 10  # miles
+
+# Define API endpoint for reverse geocoding
+api_endpoint = 'https://nominatim.openstreetmap.org/reverse'
+
+# Define query parameters for reverse geocoding
+query_params = {
+    'lat': wallet_location[0],
+    'lon': wallet_location[1],
+    'format': 'json'
+}
+
+# Send reverse geocoding request to API
+response = requests.get(api_endpoint, params=query_params)
+
+# Parse response data
+address_data = response.json()['address']
+
+# Print wallet location and address data
+print('Wallet Location:', wallet_location)
+print('Address Data:', address_data)
+
+# Search for nearby wallets within the specified radius
+nearby_wallets = []
+for location in locations:
+    distance = geopy.distance.distance(wallet_location, location).miles
+    if distance <= search_radius:
+        nearby_wallets.append(location)
+
+# Print nearby wallets
+print('Nearby Wallets:', nearby_wallets)
